@@ -5,17 +5,31 @@
  */
 package ovpnfinder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  *
  * @author jdeu
  */
 public class ovpnfinder extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ovpnfinder
-     */
+String s[] = {"10.91.9.5", "10.91.9.1"};
     public ovpnfinder() {
         initComponents();
+        
+        this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("OpenVPN Finder // guifi.net");
+        this.pack();
+        this.setVisible(true);
+        
+        config_creator conf = new config_creator ( s, true, "joan.arbona", "Mmayol");
+        System.out.println(conf.getConfFile());
+        System.out.println(conf.getPassFile());
     }
 
     /**
@@ -74,6 +88,8 @@ public class ovpnfinder extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ovpnfinder().setVisible(true);
+                
+                
             }
         });
     }
