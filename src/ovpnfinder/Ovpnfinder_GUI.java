@@ -45,21 +45,25 @@ String s[] = {"10.91.9.5", "10.91.9.1"};
         System.out.println(conf.getConfFile());
         System.out.println(conf.getPassFile());
         
-    try {
         finder f1 = new finder("http://guifi.net/ca/guifi/cnml/41583/detail");
-    } catch (SAXException ex) {
-        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ParserConfigurationException ex) {
-        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
+
+        /*
+        servidor_ovpn[] srvlist = f1.getSrvList();
+        
+        for (int i=0; i<f1.getLength();i++){
+            System.out.println(srvlist[i].getValidField());
+            System.out.println(srvlist[i].getIP());
+            System.out.println(srvlist[i].getNom());
+            System.out.println(srvlist[i].getEstat());
+            System.out.println("-----");
+        }*/
+            /*
         servidor_ovpn srv1 = new servidor_ovpn("8.8.8.8");
         System.out.println(srv1.getEstat());
         System.out.println("IP"+srv1.getIP());
         System.out.println("Nom"+srv1.getNom());
         System.out.println("Valid"+srv1.getValidField());
-        
+        */
        // PintaFormulari();
     }
     private javax.swing.JTable jTable1;
