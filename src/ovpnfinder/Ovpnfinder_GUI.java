@@ -2,7 +2,12 @@ package ovpnfinder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -11,6 +16,12 @@ import javax.swing.*;
 public class Ovpnfinder_GUI extends javax.swing.JFrame {
 
 String s[] = {"10.91.9.5", "10.91.9.1"};
+
+/*De cada servidor mostram
+    1. Nom
+    2. Node
+    3. Estat
+*/
 
     public Ovpnfinder_GUI() {
         initComponents();
@@ -34,7 +45,22 @@ String s[] = {"10.91.9.5", "10.91.9.1"};
         System.out.println(conf.getConfFile());
         System.out.println(conf.getPassFile());
         
-        PintaFormulari();
+    try {
+        finder f1 = new finder("http://guifi.net/ca/guifi/cnml/41583/detail");
+    } catch (SAXException ex) {
+        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ParserConfigurationException ex) {
+        Logger.getLogger(Ovpnfinder_GUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        servidor_ovpn srv1 = new servidor_ovpn("8.8.8.8");
+        System.out.println(srv1.getEstat());
+        System.out.println("IP"+srv1.getIP());
+        System.out.println("Nom"+srv1.getNom());
+        System.out.println("Valid"+srv1.getValidField());
+        
+       // PintaFormulari();
     }
     private javax.swing.JTable jTable1;
     
