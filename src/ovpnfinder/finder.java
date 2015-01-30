@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
  */
 public class finder {
 
-    final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 10;
     servidor_ovpn srv_list[] = new servidor_ovpn[MAX_SIZE]; 
     int n=0;
     
@@ -97,7 +97,9 @@ public class finder {
             //hardcoded servers per si no podem accedir a Internet.
             srv_list[0] = new servidor_ovpn("vpnalq.guifisoller.cat");
             srv_list[1] = new servidor_ovpn("proxyvic.guifisoller.cat");
-            n=2;
+            srv_list[2] = new servidor_ovpn("proxydvic.guifisoller.cat");
+            srv_list[3] = new servidor_ovpn("proxydevic.guifisoller.cat");
+            n=4;
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(finder.class.getName()).log(Level.SEVERE, null, ex);
         }
