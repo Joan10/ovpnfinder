@@ -14,7 +14,7 @@ public class config_creator {
     private String vpnconf = "";
     private String pass = "";
     
-    public config_creator(String remotes[], boolean remote_random, String Usuari, String Contrasenya) {
+    public config_creator(String remotes[], int len, boolean remote_random, String Usuari, String Contrasenya) {
     
         if ( remotes.length == 0 ) {
             throw new IllegalArgumentException("Llista de servidors remots buida!");
@@ -28,7 +28,7 @@ public class config_creator {
                     "#log /tmp/openvpn.log\n" +
                     "proto udp\n" +
                     "verb 5\n";
-        for (int i = 0; i < remotes.length; i++){
+        for (int i = 0; i < len; i++){
             //Afegim tants remote com noms de servidors passats
             vpnconf = vpnconf + ("remote " + remotes[i] + " 1194\n");
         }

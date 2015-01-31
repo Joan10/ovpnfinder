@@ -20,6 +20,9 @@ import org.xml.sax.SAXException;
 public class Ovpnfinder_GUI extends javax.swing.JFrame {
 
 servidor_ovpn of[] = new servidor_ovpn[finder.MAX_SIZE];
+//Llista de servidors disponibles
+
+
 /*De cada servidor mostram
     1. Nom
     2. Node
@@ -57,26 +60,33 @@ servidor_ovpn of[] = new servidor_ovpn[finder.MAX_SIZE];
         ListSelectionModel selectionModel = jTable2.getSelectionModel();
 
         selectionModel.addListSelectionListener(new ListSelectionListener() {
-        
-    public void valueChanged(ListSelectionEvent e) {
-        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-        String sel="";
-        if (lsm.isSelectionEmpty()) {
-           System.out.println("none");
-        } else {
-            // Find out which indexes are selected.
-            int minIndex = lsm.getMinSelectionIndex();
-            int maxIndex = lsm.getMaxSelectionIndex();
-            for (int i = minIndex; i <= maxIndex; i++) {
-                if (lsm.isSelectedIndex(i)) {
-                    sel=sel+of[i].getValidField()+", ";
+            //Listener per quan pitjam
+            public void valueChanged(ListSelectionEvent e) {
+                int num=0;
+                ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+                String sel="";
+                if (lsm.isSelectionEmpty()) {
+                   System.out.println("none");
+                } else {
+                    // Find out which indexes are selected.
+                    int minIndex = lsm.getMinSelectionIndex();
+                    int maxIndex = lsm.getMaxSelectionIndex();
+                    for (int i = minIndex; i <= maxIndex; i++) {
+                        if (lsm.isSelectedIndex(i)) {
+                            sel=sel+of[i].getValidField()+", ";
+                            num++;
+                        }
+                    }
+                    if (num == 0)
+                        jButton1.setEnabled(false);
+                    else
+                        jButton1.setEnabled(true);
+                    
+                    jLabel4.setText(sel);
+                    System.out.println(sel);
                 }
             }
-            jLabel4.setText(sel);
-            System.out.println(sel);
-        }
-    }
-});
+        });
         
         
         for (int i=0; i<f1.getLength();i++){
@@ -160,13 +170,14 @@ servidor_ovpn of[] = new servidor_ovpn[finder.MAX_SIZE];
         jLabel4.setText("jLabel4");
 
         jButton1.setText("Carrega");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Surt");
+        jButton2.setText("Cancel·la");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -195,8 +206,9 @@ servidor_ovpn of[] = new servidor_ovpn[finder.MAX_SIZE];
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -224,11 +236,34 @@ servidor_ovpn of[] = new servidor_ovpn[finder.MAX_SIZE];
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Acceptar formulari
+        
+        //Llista de servidors seleccionats i número
+        String str_servers[] = new String[finder.MAX_SIZE];
+        
+        int num=0;
+        int minIndex;
+        int maxIndex;
+        //pas 1 recollir els servidors seleccionats
+        ListSelectionModel lsm = jTable2.getSelectionModel();
+        minIndex = lsm.getMinSelectionIndex();
+        maxIndex = lsm.getMaxSelectionIndex();
+        for (int i = minIndex; i <= maxIndex; i++) {
+            if (lsm.isSelectedIndex(i)) {
+                str_servers[num]=of[i].getValidField();
+                num++;
+            }
+        }
+        
+        //Pas 2, crea configuració.
+        config_creator conf = new config_creator ( str_servers, num, true, "joan.arbona", "Mmayol");
+        System.out.println(conf.getConfFile());
+        System.out.println(conf.getPassFile());
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
