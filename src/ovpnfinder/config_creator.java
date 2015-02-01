@@ -14,10 +14,27 @@ public class config_creator {
     private String vpnconf = "";
     private String pass = "";
     
+    public String command_creator(){
+        //Generam les comandes per enviar al router.
+        if (vpnconf.equals("") || pass.equals("")) return "";
+        
+        String vpnconf_command = "echo '"+vpnconf+"'>  /tmp/vpn.conf";
+        String pass_command = "echo '"+pass+"'>  /tmp/pass.conf";
+        
+        String openvpnconf = "config openvpn client_tun_0\n" +
+"        option enabled 1\n" +
+"	option config /etc/openvpn/vpn.conf";
+        
+        String vpnconf2_command = "echo '"+openvpnconf+"' > /tmp/openvpn.conf";
+        String rstservice_command = "/etc/init.d/openvpn restart";
+        return vpnconf_command+";"+pass_command+";"+vpnconf2_command+";"+rstservice_command;
+    }
     public config_creator(String remotes[], int len, boolean remote_random, String Usuari, String Contrasenya) {
     
         if ( remotes.length == 0 ) {
             throw new IllegalArgumentException("Llista de servidors remots buida!");
+        }else if (Usuari.equals("") || Contrasenya.equals("")) {
+            throw new IllegalArgumentException("Usuari o contrasenya buits!");
         }
 
         vpnconf =   "client\n" +
